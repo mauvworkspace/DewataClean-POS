@@ -12,6 +12,15 @@ html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
 header{background:var(--pri);color:var(--onpri);padding:18px 16px 14px;border-bottom:4px solid var(--acc)}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px}
+#out{padding:8px 14px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:10px;font:600 14px inherit;cursor:pointer;white-space:nowrap}
+body.locked header,body.locked nav,body.locked main{display:none}
+#lg{display:none;min-height:100vh;padding:48px 16px}
+body.locked #lg{display:block}
+#lg .box{max-width:400px;margin:0 auto}
+#lg h2{margin:0 0 4px;font:700 26px Georgia,serif;color:var(--pri)}
+#lg p{margin:0 0 6px;color:var(--mute);font-size:14px}
+#lerr{color:var(--warn);font-size:14px;font-weight:600;min-height:20px;margin-top:10px}
 header h1{margin:0;font:700 24px Georgia,"Times New Roman",serif}
 header p{margin:2px 0 0;opacity:.85;font-size:14px}
 nav{display:flex;gap:8px;padding:12px 16px 0;max-width:760px;margin:0 auto}
@@ -51,10 +60,25 @@ td button{padding:5px 9px;border:1px solid var(--pri);background:transparent;col
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;max-width:90%;display:none;z-index:5}
 </style>
 </head>
-<body>
+<body class="locked">
+<div id="lg">
+  <form class="box card" id="lf" autocomplete="on">
+    <h2>Dewata Clean Laundry</h2>
+    <p>Masuk untuk membuka kasir.</p>
+    <label for="lu">Username</label>
+    <input id="lu" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+    <label for="lp">Password</label>
+    <input id="lp" name="password" type="password" autocomplete="current-password" required>
+    <div id="lerr" role="alert"></div>
+    <button class="btn" type="submit" id="lb">Masuk</button>
+  </form>
+</div>
 <header>
-  <h1>Dewata Clean Laundry</h1>
-  <p>Kasir laundry express 24 jam, Bali</p>
+  <div>
+    <h1>Dewata Clean Laundry</h1>
+    <p>Kasir laundry express 24 jam, Bali</p>
+  </div>
+  <button type="button" id="out">Keluar</button>
 </header>
 <nav role="tablist">
   <button role="tab" id="t1" aria-selected="true">Kasir</button>
@@ -126,6 +150,29 @@ const persist=()=>{try{localStorage.setItem('dcl-orders',JSON.stringify(orders))
 (window.claude?window.claude.use('downloads'):Promise.resolve(null)).then(d=>dl=d).catch(()=>{});
 
 function toast(m){const t=$('toast');t.textContent=m;t.style.display='block';clearTimeout(toast.k);toast.k=setTimeout(()=>t.style.display='none',3200)}
+
+const AUTH_U='admin',AUTH_H='f07fe272b6732452434b18b15a9cb358813f2b51eb6111e1380f7dd4d750d85c';
+let authMem=false,fails=0,lockUntil=0;
+const isAuth=()=>{try{return sessionStorage.getItem('dcl-auth')==='1'}catch(e){return authMem}};
+const setAuth=v=>{authMem=v;try{v?sessionStorage.setItem('dcl-auth','1'):sessionStorage.removeItem('dcl-auth')}catch(e){}};
+const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(b=>b.toString(16).padStart(2,'0')).join('');
+function lock(){setAuth(false);document.body.classList.add('locked');$('rcw').hidden=true;last=null;$('lp').value='';$('lerr').textContent='';$('lu').focus()}
+function unlock(){document.body.classList.remove('locked');$('lp').value='';$('lerr').textContent='';tab(1)}
+$('lf').onsubmit=async e=>{
+ e.preventDefault();
+ const err=$('lerr'),wait=Math.ceil((lockUntil-Date.now())/1000);
+ if(wait>0){err.textContent='Terlalu banyak percobaan. Coba lagi dalam '+wait+' detik.';return}
+ const u=$('lu').value.trim(),p=$('lp').value;
+ let ok=false;
+ try{ok=u===AUTH_U&&(await sha(u+':'+p))===AUTH_H}
+ catch(x){err.textContent='Browser tidak mendukung verifikasi login.';return}
+ if(ok){fails=0;setAuth(true);unlock();return}
+ fails++;$('lp').value='';$('lp').focus();
+ if(fails>=5){lockUntil=Date.now()+30000;fails=0;err.textContent='Terlalu banyak percobaan. Coba lagi dalam 30 detik.'}
+ else err.textContent='Username atau password salah.';
+};
+$('out').onclick=lock;
+if(isAuth())document.body.classList.remove('locked');
 
 function tab(n){
  $('p1').hidden=n!==1;$('p2').hidden=n!==2;
