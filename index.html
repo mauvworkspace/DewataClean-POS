@@ -118,7 +118,7 @@ td button{padding:5px 9px;border:1px solid var(--pri);background:transparent;col
     <canvas id="rc"></canvas>
     <div class="row">
       <button class="btn sec" id="jpg">Simpan nota JPEG</button>
-      <button class="btn line" id="wa">Kirim WhatsApp</button>
+      <button class="btn line" id="wa">Kirim WhatsApp + Foto Nota</button>
     </div>
   </div>
 </section>
@@ -301,9 +301,23 @@ async function save(name,data){
 $('jpg').onclick=()=>{if(last)$('rc').toBlob(b=>save('nota-'+last.no+'.jpg',b),'image/jpeg',.92)};
 $('wa').onclick=()=>{
  if(!last)return;
- const p=(last.phone||'').replace(/\D/g,'').replace(/^0/,'62');
- const m=encodeURIComponent('Halo '+last.name+', nota '+last.no+' dari Dewata Clean Laundry: '+PK[last.pk].n+', total '+rp(last.total)+(last.paid?' (lunas)':' (belum lunas)')+'. Estimasi selesai '+fd(last.t+PK[last.pk].h*3600000)+'. Terima kasih!');
- window.open('https://wa.me/'+p+'?text='+m,'_blank');
+ const o=last,fn='nota-'+o.no+'.jpg';
+ const p=(o.phone||'').replace(/\D/g,'').replace(/^0/,'62');
+ const msg='Halo '+o.name+', nota '+o.no+' dari Dewata Clean Laundry: '+PK[o.pk].n+', total '+rp(o.total)+(o.paid?' (lunas)':' (belum lunas)')+'. Estimasi selesai '+fd(o.t+PK[o.pk].h*3600000)+'. Terima kasih!';
+ let canFile=false;
+ try{canFile=!!(navigator.canShare&&navigator.canShare({files:[new File([''],fn,{type:'image/jpeg'})]}))}catch(e){}
+ if(canFile){
+  // HP: buka menu bagikan dengan foto nota terlampir, pilih WhatsApp lalu pilih pelanggan
+  $('rc').toBlob(async b=>{
+   try{await navigator.share({files:[new File([b],fn,{type:'image/jpeg'})],text:msg});return}
+   catch(e){if(e&&e.name==='AbortError')return}
+   save(fn,b);window.open('https://wa.me/'+p+'?text='+encodeURIComponent(msg),'_blank');toast('Nota diunduh, lampirkan di chat WhatsApp');
+  },'image/jpeg',.92);
+  return;
+ }
+ // Komputer: WhatsApp dibuka dengan teks, foto nota diunduh untuk dilampirkan
+ window.open('https://wa.me/'+p+'?text='+encodeURIComponent(msg),'_blank');
+ $('rc').toBlob(b=>{save(fn,b);toast('Foto nota diunduh, lampirkan di chat WhatsApp')},'image/jpeg',.92);
 };
 
 function render(){
