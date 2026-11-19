@@ -291,7 +291,7 @@ function draw(o){
  row(P.s.replace('Selesai','Estimasi selesai'),'',y);y+=36;
  x.fillStyle='#3b2f63';x.font='bold 24px sans-serif';x.textAlign='left';x.fillText(fd(o.t+P.h*3600000),L,y);y+=60;
  x.fillStyle='#6b6485';x.font='18px sans-serif';x.textAlign='center';
- x.fillText('Simpan nota ini untuk pengambilan cucian.',W/2,y);x.fillText('Terima kasih sudah mencuci di Dewata Clean Laundry!',W/2,y+28);
+ x.fillText('Keep this receipt for laundry pick-up.',W/2,y);x.fillText('Thank you for washing at Dewata Clean Laundry!',W/2,y+28);
  const Hn=Math.ceil(y+28+46),img=x.getImageData(0,0,W,Hn);c.height=Hn;x.putImageData(img,0,0);
 }
 async function useDl(){if(!dl&&window.claude){try{dl=await window.claude.use('downloads')}catch(e){}}return dl}
