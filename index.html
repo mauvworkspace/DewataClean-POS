@@ -51,7 +51,7 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid 
 .btn{display:block;width:100%;margin-top:14px;padding:14px;border:0;border-radius:99px;background:var(--acc);color:#3b2f63;box-shadow:0 6px 16px #fbdc8a66;font:700 17px inherit;cursor:pointer}
 .btn.sec{background:var(--pri);color:var(--onpri);box-shadow:none}
 .btn.line{box-shadow:none;background:transparent;color:var(--pri);border:2px solid var(--pri)}
-.row{display:flex;gap:10px}
+.row{display:flex;flex-direction:column}
 .row .btn{margin-top:10px}
 canvas{width:100%;height:auto;border:1px solid var(--line);border-radius:10px;display:block;background:#fff}
 .sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
@@ -119,6 +119,7 @@ td button{padding:5px 9px;border:1px solid var(--pri);background:transparent;col
     <div class="row">
       <button class="btn sec" id="jpg">Simpan nota JPEG</button>
       <button class="btn line" id="wa">Kirim WhatsApp + Foto Nota</button>
+      <button class="btn" id="wa2">Kirim WhatsApp ke Pelanggan (Teks)</button>
     </div>
   </div>
 </section>
@@ -264,7 +265,7 @@ function showRc(o){
  $('rcw').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function draw(o){
- const c=$('rc'),x=c.getContext('2d'),W=600,H=800,L=40,R=560,P=PK[o.pk];
+ const c=$('rc'),x=c.getContext('2d'),W=600,H=1200,L=40,R=560,P=PK[o.pk];
  c.width=W;c.height=H;x.fillStyle='#fff';x.fillRect(0,0,W,H);
  x.fillStyle='#3b2f63';x.fillRect(0,0,W,150);x.fillStyle='#fbdc8a';x.fillRect(0,150,W,8);
  x.fillStyle='#fff';x.textAlign='center';x.font='bold 42px Outfit,system-ui,sans-serif';x.fillText('Dewata Clean Laundry',W/2,78);
@@ -291,6 +292,7 @@ function draw(o){
  x.fillStyle='#3b2f63';x.font='bold 24px sans-serif';x.textAlign='left';x.fillText(fd(o.t+P.h*3600000),L,y);y+=60;
  x.fillStyle='#6b6485';x.font='18px sans-serif';x.textAlign='center';
  x.fillText('Simpan nota ini untuk pengambilan cucian.',W/2,y);x.fillText('Terima kasih sudah mencuci di Dewata Clean Laundry!',W/2,y+28);
+ const Hn=Math.ceil(y+28+46),img=x.getImageData(0,0,W,Hn);c.height=Hn;x.putImageData(img,0,0);
 }
 async function useDl(){if(!dl&&window.claude){try{dl=await window.claude.use('downloads')}catch(e){}}return dl}
 async function save(name,data){
@@ -318,6 +320,15 @@ $('wa').onclick=()=>{
  // Komputer: WhatsApp dibuka dengan teks, foto nota diunduh untuk dilampirkan
  window.open('https://wa.me/'+p+'?text='+encodeURIComponent(msg),'_blank');
  $('rc').toBlob(b=>{save(fn,b);toast('Foto nota diunduh, lampirkan di chat WhatsApp')},'image/jpeg',.92);
+};
+
+$('wa2').onclick=()=>{
+ if(!last)return;
+ let p=(last.phone||'').replace(/\D/g,'');
+ if(!p){toast('Nomor WhatsApp pelanggan belum diisi');return}
+ if(p[0]==='0')p='62'+p.slice(1);else if(p[0]==='8')p='62'+p;
+ const m=encodeURIComponent('Halo '+last.name+', nota '+last.no+' dari Dewata Clean Laundry: '+PK[last.pk].n+', total '+rp(last.total)+(last.paid?' (lunas)':' (belum lunas)')+'. Estimasi selesai '+fd(last.t+PK[last.pk].h*3600000)+'. Terima kasih!');
+ window.open('https://wa.me/'+p+'?text='+m,'_blank');
 };
 
 function render(){
