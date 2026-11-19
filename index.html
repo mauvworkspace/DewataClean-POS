@@ -4,31 +4,39 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kasir Dewata Clean Laundry</title>
+<meta name="theme-color" content="#fcf8f6">
+<link rel="icon" type="image/png" href="logokecil.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#EEF5F4;--card:#fff;--ink:#12262B;--mute:#5C7378;--line:#D3E2E0;--pri:#0F4C5C;--onpri:#fff;--acc:#F2A900;--ok:#1B7F4B;--warn:#B4541A;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0C1A1E;--card:#142A30;--ink:#E4F0EE;--mute:#8FA9AD;--line:#244047;--pri:#5FC3D0;--onpri:#08262C;--acc:#F2B91F;--ok:#5ED394;--warn:#F08A55;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0C1A1E;--card:#142A30;--ink:#E4F0EE;--mute:#8FA9AD;--line:#244047;--pri:#5FC3D0;--onpri:#08262C;--acc:#F2B91F;--ok:#5ED394;--warn:#F08A55;color-scheme:dark}
+:root{--bg:#fcf8f6;--card:#fff;--ink:#3b2f63;--mute:#6b6485;--line:#e3dcf3;--pale:#ece6f7;--pri:#7b6bb0;--onpri:#fff;--acc:#fbdc8a;--ok:#1b7f4b;--warn:#b4541a;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 "Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
-header{background:var(--pri);color:var(--onpri);padding:18px 16px 14px;border-bottom:4px solid var(--acc)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 Outfit,"Segoe UI",system-ui,-apple-system,Roboto,sans-serif}
+header{background:var(--card);color:var(--ink);padding:14px 16px;border-bottom:4px solid var(--acc);box-shadow:0 4px 18px #3b2f6314}
 header{display:flex;justify-content:space-between;align-items:center;gap:10px}
-#out{padding:8px 14px;border:1px solid currentColor;background:transparent;color:inherit;border-radius:10px;font:600 14px inherit;cursor:pointer;white-space:nowrap}
+#out{padding:8px 16px;border:2px solid var(--pri);background:transparent;color:inherit;border-radius:10px;font:600 14px inherit;cursor:pointer;white-space:nowrap}
 body.locked header,body.locked nav,body.locked main{display:none}
 #lg{display:none;min-height:100vh;padding:48px 16px}
 body.locked #lg{display:block}
-#lg .box{max-width:400px;margin:0 auto}
-#lg h2{margin:0 0 4px;font:700 26px Georgia,serif;color:var(--pri)}
+#lg .box{max-width:400px;margin:0 auto;text-align:left}
+#lg .lgo{display:block;height:84px;width:auto;margin:0 auto 14px}
+.hb{display:flex;align-items:center;gap:12px}
+.hb img{height:48px;width:auto;display:block;flex:none}
+header h1{font-size:22px;line-height:1.15}
+header p{color:var(--mute);opacity:1}
+#lg h2{margin:0 0 4px;font:700 26px Outfit,system-ui,sans-serif;color:var(--pri)}
 #lg p{margin:0 0 6px;color:var(--mute);font-size:14px}
 #lerr{color:var(--warn);font-size:14px;font-weight:600;min-height:20px;margin-top:10px}
-header h1{margin:0;font:700 24px Georgia,"Times New Roman",serif}
+header h1{margin:0;font:700 24px Outfit,system-ui,sans-serif}
 header p{margin:2px 0 0;opacity:.85;font-size:14px}
 nav{display:flex;gap:8px;padding:12px 16px 0;max-width:760px;margin:0 auto}
-nav button{flex:1;padding:11px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:600 15px inherit;cursor:pointer}
+nav button{flex:1;padding:11px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:99px;font:600 15px inherit;cursor:pointer}
 nav button[aria-selected="true"]{background:var(--pri);color:var(--onpri);border-color:var(--pri)}
 main{max-width:760px;margin:0 auto;padding:12px 16px 40px}
 section[hidden]{display:none}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:0 6px 22px #3b2f6310}
 label{display:block;font-size:14px;color:var(--mute);margin:12px 0 4px}
 input,select,textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:16px inherit}
 input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid var(--acc);outline-offset:1px}
@@ -37,17 +45,17 @@ input:focus-visible,select:focus-visible,button:focus-visible{outline:3px solid 
 .pk button{padding:10px 8px;border:2px solid var(--line);background:var(--bg);color:var(--ink);border-radius:10px;text-align:left;cursor:pointer;font:inherit}
 .pk button b{display:block;font-size:15px}
 .pk button span{font-size:13px;color:var(--mute)}
-.pk button[aria-pressed="true"]{border-color:var(--pri);background:var(--card);box-shadow:inset 0 0 0 1px var(--pri)}
+.pk button[aria-pressed="true"]{border-color:var(--pri);background:var(--pale);box-shadow:inset 0 0 0 1px var(--pri)}
 .total{display:flex;justify-content:space-between;align-items:baseline;margin-top:16px;padding-top:14px;border-top:2px dashed var(--line)}
-.total strong{font:700 28px Georgia,serif;color:var(--pri)}
-.btn{display:block;width:100%;margin-top:14px;padding:14px;border:0;border-radius:12px;background:var(--acc);color:#1a1200;font:700 17px inherit;cursor:pointer}
-.btn.sec{background:var(--pri);color:var(--onpri)}
-.btn.line{background:transparent;color:var(--pri);border:2px solid var(--pri)}
+.total strong{font:700 28px Outfit,system-ui,sans-serif;color:var(--pri)}
+.btn{display:block;width:100%;margin-top:14px;padding:14px;border:0;border-radius:99px;background:var(--acc);color:#3b2f63;box-shadow:0 6px 16px #fbdc8a66;font:700 17px inherit;cursor:pointer}
+.btn.sec{background:var(--pri);color:var(--onpri);box-shadow:none}
+.btn.line{box-shadow:none;background:transparent;color:var(--pri);border:2px solid var(--pri)}
 .row{display:flex;gap:10px}
 .row .btn{margin-top:10px}
 canvas{width:100%;height:auto;border:1px solid var(--line);border-radius:10px;display:block;background:#fff}
 .sum{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
-.sum div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px}
+.sum div{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:10px}
 .sum small{color:var(--mute);font-size:12px}
 .sum b{display:block;font-size:15px;margin-top:2px}
 .tw{overflow-x:auto}
@@ -63,7 +71,7 @@ td button{padding:5px 9px;border:1px solid var(--pri);background:transparent;col
 <body class="locked">
 <div id="lg">
   <form class="box card" id="lf" autocomplete="on">
-    <h2>Dewata Clean Laundry</h2>
+    <img class="lgo" src="logokecil.png" alt="Dewata Clean"><h2>Dewata Clean Laundry</h2>
     <p>Masuk untuk membuka kasir.</p>
     <label for="lu">Username</label>
     <input id="lu" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required>
@@ -74,10 +82,10 @@ td button{padding:5px 9px;border:1px solid var(--pri);background:transparent;col
   </form>
 </div>
 <header>
-  <div>
+  <div class="hb"><img src="logokecil.png" alt="Dewata Clean"><div>
     <h1>Dewata Clean Laundry</h1>
     <p>Kasir laundry express 24 jam, Bali<span id="sy"></span></p>
-  </div>
+  </div></div>
   <button type="button" id="out">Keluar</button>
 </header>
 <nav role="tablist">
@@ -258,30 +266,30 @@ function showRc(o){
 function draw(o){
  const c=$('rc'),x=c.getContext('2d'),W=600,H=800,L=40,R=560,P=PK[o.pk];
  c.width=W;c.height=H;x.fillStyle='#fff';x.fillRect(0,0,W,H);
- x.fillStyle='#0F4C5C';x.fillRect(0,0,W,150);x.fillStyle='#F2A900';x.fillRect(0,150,W,8);
- x.fillStyle='#fff';x.textAlign='center';x.font='bold 42px Georgia,serif';x.fillText('Dewata Clean Laundry',W/2,78);
+ x.fillStyle='#3b2f63';x.fillRect(0,0,W,150);x.fillStyle='#fbdc8a';x.fillRect(0,150,W,8);
+ x.fillStyle='#fff';x.textAlign='center';x.font='bold 42px Outfit,system-ui,sans-serif';x.fillText('Dewata Clean Laundry',W/2,78);
  x.font='20px sans-serif';x.fillText('Laundry Express 24 Jam, Bali',W/2,116);
  x.textAlign='left';
- const row=(a,b,y,bold)=>{x.fillStyle='#5C7378';x.font='20px sans-serif';x.textAlign='left';x.fillText(a,L,y);x.fillStyle='#12262B';x.font=(bold?'bold ':'')+'21px sans-serif';x.textAlign='right';x.fillText(b,R,y)};
- const dash=y=>{x.strokeStyle='#9DB5B8';x.setLineDash([8,6]);x.lineWidth=2;x.beginPath();x.moveTo(L,y);x.lineTo(R,y);x.stroke();x.setLineDash([])};
+ const row=(a,b,y,bold)=>{x.fillStyle='#6b6485';x.font='20px sans-serif';x.textAlign='left';x.fillText(a,L,y);x.fillStyle='#3b2f63';x.font=(bold?'bold ':'')+'21px sans-serif';x.textAlign='right';x.fillText(b,R,y)};
+ const dash=y=>{x.strokeStyle='#c9bfe3';x.setLineDash([8,6]);x.lineWidth=2;x.beginPath();x.moveTo(L,y);x.lineTo(R,y);x.stroke();x.setLineDash([])};
  let y=210;
  row('No. nota',o.no,y,1);y+=38;
  row('Tanggal',fd(o.t),y);y+=38;
  row('Pelanggan',o.name,y,1);y+=38;
  if(o.phone){row('WhatsApp',o.phone,y);y+=38}
  y+=4;dash(y);y+=44;
- x.textAlign='left';x.fillStyle='#12262B';x.font='bold 26px sans-serif';x.fillText(P.n,L,y);y+=38;
+ x.textAlign='left';x.fillStyle='#3b2f63';x.font='bold 26px sans-serif';x.fillText(P.n,L,y);y+=38;
  row(o.qty+' '+P.u+' x '+rp(o.price),rp(o.total),y);y+=30;
- if(o.note){x.fillStyle='#5C7378';x.font='italic 18px sans-serif';x.textAlign='left';x.fillText('Catatan: '+o.note,L,y+10);y+=34}
+ if(o.note){x.fillStyle='#6b6485';x.font='italic 18px sans-serif';x.textAlign='left';x.fillText('Catatan: '+o.note,L,y+10);y+=34}
  y+=14;dash(y);y+=56;
- x.textAlign='left';x.fillStyle='#12262B';x.font='bold 28px sans-serif';x.fillText('TOTAL',L,y);
- x.fillStyle='#0F4C5C';x.font='bold 40px Georgia,serif';x.textAlign='right';x.fillText(rp(o.total),R,y);y+=46;
+ x.textAlign='left';x.fillStyle='#3b2f63';x.font='bold 28px sans-serif';x.fillText('TOTAL',L,y);
+ x.fillStyle='#3b2f63';x.font='bold 40px Outfit,system-ui,sans-serif';x.textAlign='right';x.fillText(rp(o.total),R,y);y+=46;
  row('Pembayaran',o.pay,y);y+=44;
  x.fillStyle=o.paid?'#1B7F4B':'#B4541A';x.fillRect(L,y-30,R-L,52);
  x.fillStyle='#fff';x.font='bold 26px sans-serif';x.textAlign='center';x.fillText(o.paid?'LUNAS':'BELUM LUNAS, BAYAR SAAT AMBIL',W/2,y+7);y+=76;
  row(P.s.replace('Selesai','Estimasi selesai'),'',y);y+=36;
- x.fillStyle='#12262B';x.font='bold 24px sans-serif';x.textAlign='left';x.fillText(fd(o.t+P.h*3600000),L,y);y+=60;
- x.fillStyle='#5C7378';x.font='18px sans-serif';x.textAlign='center';
+ x.fillStyle='#3b2f63';x.font='bold 24px sans-serif';x.textAlign='left';x.fillText(fd(o.t+P.h*3600000),L,y);y+=60;
+ x.fillStyle='#6b6485';x.font='18px sans-serif';x.textAlign='center';
  x.fillText('Simpan nota ini untuk pengambilan cucian.',W/2,y);x.fillText('Terima kasih sudah mencuci di Dewata Clean Laundry!',W/2,y+28);
 }
 async function useDl(){if(!dl&&window.claude){try{dl=await window.claude.use('downloads')}catch(e){}}return dl}
